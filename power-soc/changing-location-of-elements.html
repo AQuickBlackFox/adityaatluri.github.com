@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Aditya Atluri, A GPU Developer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The blog of Alexandre Croteau-Pothier a Montreal based developer who love Ruby, Vim and Linux">
+    <meta name="author" content="Alexandre Croteau-Pothier">
+    <link href='//fonts.googleapis.com/css?family=Alfa+Slab+One' rel='stylesheet' type='text/css'>
+    <link href="//fonts.googleapis.com/css?family=Pontano+Sans" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/assets/app-f55b28c67b2264d45be2bd4956bbd707.css">
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div id="wrap">
+
+      <div id="header">
+        <div class="container">
+          <div class="row-fluid">
+          <div class="span6 logo">
+            <a href="/">
+              <h1>aditya</h1>
+            </a>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+
+        <div class="row-fluid">
+          <div class="span2 sidebar hidden-phone">
+            <img src="https://en.gravatar.com/userimage/39046417/3a9d8fddf5aaffb9f60f15c8db59ff15.jpg?size=200" title="alexandre croteau pothier ruby developer from montreal" alt="alexandre croteau pothier ruby developer montreal" class="img-circle" width="100" height="100" />
+            <ul>
+              <li><h5>Aditya Atluri</h5></li>
+              <li><p>GPU Developer. Loves Computer Graphics, GPGPU and Architecture.</p></li>
+              <li><a href="https://github.com/adityaatluri">adityaatluri</a></li>
+              <li><a href="https://twitter.com/#!/adityaaatluri">@adityaaatluri</a></li> 
+            </ul>
+          </div>
+
+          <div class="span10">
+            <h2>Power Management by displacing Caches</h2>
+
+<h3 id='introduction'>Introduction</h3>
+
+<p>I have taken computer architecture course in my grad school where I was asked to check for performance by changing the size of different levels of cache. As it is straightforward, I tried to take it to next level by changing the location of Data L1 and L2 caches (DL1, DL2) to check for better power usage and un-degraded performance.</p>
+
+<h3 id='why_moving_caches'>Why moving caches?</h3>
+
+<p>Traditional CPUs have L1 and L2 caches very near to the ALU (aka CPU) so that the data can be accessed faster. This has been the design paradigm for improving performance of memory access. There are different optimization techniques for making caches faster and accurate(more hits), which can be read in any good architecture textbook.</p>
+
+<p>Before going to explanation, let us examine the states of different elements in a CPU of a mobile device. In full working state, (ON) all the units will be working and in full closed state, (OFF) all the units will not be working which means they are not powered up. In partial working state (SLEEP), all the components in the CPU will not be working. The ALU and permanent storage devices practically goes to stop state and the only elements active are temporary data storage elements like Caches and DRAM. The wireless communicators wake up once in a while (whole other story). Most of the time the mobile devices live in SLEEP state. They can&#8217;t be powered off because they are volatile. This takes toll on battery usage. Coming back to ON state, all the caches and the ALU keep working. As caches and ALU are located close to each other causes creating an intense hot-spot on the chip. The hot-spot makes processor to dissipate more heat. We tried to move the caches to a distant location on the chip from ALU so that the effect of hot-spot will get decreased in terms of heat, performance and power consumption. We can&#8217;t move DRAM because it is seperate package which is connected to CPU via wire strip. Hence, we moved caches to manage heat better, decrease the power consumption and not decreasing the performance of programs (algorithms) used on them.</p>
+
+<h3 id='quantifying_the_distance'>Quantifying the Distance</h3>
+
+<p>In this experiment, we used simplescalar for performance simulation. The simplescalar version I have used for this experiment does not support distance parameter. Hence, we interpreted the latency of accessing the cache as distance travelled by the signal to reach the cache with actual latency. We increased the cache double fold which means, the amount of delay taken by the request to reach the cache is equal to the amount of time taken by cache to retrieve data from its lines. After changing the location of the caches, we ran multiple standard benchmarks on the resultant system to check for any performance changes.</p>
+
+<h3 id='results'>Results</h3>
+
+<p>The below image shows Instruction Per Clock Cycle (IPC) by moving the Caches away from ALU. <img alt='Image' src='https://raw.githubusercontent.com/adityaatluri/adityaatluri.github.com/master/Picture1.jpg' /></p>
+
+<p>We can see that the performance of applications did not get effected by moving Data L2 cache. Also, there is performance drop for moving Data L1 cache under Dijkstras benchmark.</p>
+
+<h3 id='conculsion'>Conculsion</h3>
+
+<p>As there isn&#8217;t significant performance drop in moving caches around, this seems to be a viable approach in controlling the thermal limits of CPU.</p>
+
+<blockquote>
+<p>All the benchmarks are run on SimpleScalar.</p>
+</blockquote>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'alexcp'; 
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+//   dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+   })();
+ </script>
+
+          </div>
+        </div>
+
+      </div>
+      <div id="push"></div>
+    </div>
+
+    <div id="footer">
+      <div class="container">
+        <div id="row">
+          <p class="muted credit">
+            &#169; For theme: AlexCP 2013, &#169; For Content: Aditya Atluri 2015</p>
+        </div>
+      </div>
+    </div>
+
+  </body>
+  <script type="text/javascript" src="/assets/app-017390ab292da6d9dca8326b34f6d4bc.js"></script>
+</html>
